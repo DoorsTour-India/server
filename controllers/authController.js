@@ -81,7 +81,7 @@ exports.login = async (req, res, next) => {
 
     createAndSendToken(user, 200, res);
   } catch (err) {
-    res.status(400).join({
+    res.status(400).json({
       status: "fail",
       message: err,
     });
