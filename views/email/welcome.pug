@@ -1,0 +1,18 @@
+extends baseEmail 
+
+block content
+  p Hi #{firstName},
+  p Welcome to Krayik, we're glad to have you 🎉🙏
+  p Your Email has been updated.
+  p We're all a big familiy here, so make sure to download the app and update your profile!
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`#`, target='_blank') Login Now
+  p If you need any help with our service, kindly mail at krayik@doorstour.com
+  p - Krayik, New Delhi, India

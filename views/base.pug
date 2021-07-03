@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')    
+    link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+    title Krayik | #{title}            
+
+    include _style
+
+  body
+    table.body(role='presentation', border='0', cellpadding='0', cellspacing='0')
+      tbody
+        tr
+          td
+          td.container
+            .content
+              // START CENTERED WHITE CONTAINER
+              table.main(role='presentation')
+
+                // START MAIN AREA
+                tbody
+                  tr
+                    td.wrapper
+                      table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                        tbody
+                          tr
+                            td
+                              // CONTENT
+                              block content
+
+              // START FOOTER
+              .footer
+                table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                  tbody
+                    tr
+                      td.content-block
+                        span.apple-link Krayik, New Delhi, India
+
+          //- td  
