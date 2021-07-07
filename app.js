@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const userRouter = require('./routes/userRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 });
 
 //ROUTES
+app.use('/', viewRouter);
 app.use('/krayikapi/v1/users', userRouter);
 
 app.all('*', (req, res, next) => {
