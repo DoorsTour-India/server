@@ -7,14 +7,18 @@ const AppError = require('./../utils/appError');
 const Email = require('./../utils/email');
 //refer code generator
 function generatePassword(passwordLength) {
-  var numberChars = "0123456789";
-  var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var numberChars = '0123456789';
+  var upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var allChars = numberChars + upperChars;
   var randPasswordArray = Array(passwordLength);
   randPasswordArray[0] = numberChars;
   randPasswordArray[1] = upperChars;
   randPasswordArray = randPasswordArray.fill(allChars, 3);
-  return shuffleArray(randPasswordArray.map(function (x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+  return shuffleArray(
+    randPasswordArray.map(function (x) {
+      return x[Math.floor(Math.random() * x.length)];
+    })
+  ).join('');
 }
 
 function shuffleArray(array) {
@@ -60,15 +64,18 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (req.body.rc.length == 7) {
     const referedBy = await User.findOne({ referCode: req.body.rc });
     if (!referedBy) {
-      return next(
-        new AppError("Wrong refer code please try again", 401)
-      );
-    }
-    else {
+      return next(new AppError('Wrong refer code please try again', 401));
+    } else {
       points = referedBy.points;
       points = points + 1;
       referedBy.points = points;
-      await referedBy.save()
+      await User.findByIdAndUpdate(
+        referedBy._id,
+        { points: points },
+        {
+          runValidators: false,
+        }
+      );
       //creating new user
       let token = crypto.randomBytes(32).toString('hex');
       const activationToken = crypto
@@ -83,8 +90,8 @@ exports.signup = catchAsync(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm,
         activationToken,
         referCode: generatePassword(8),
-        points : 1,
-        referedBy : referedBy._id
+        points: 1,
+        referedBy: referedBy._id,
       });
 
       const url = `${req.protocol}://${req.get(
@@ -100,9 +107,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         },
       });
     }
-
-  }
-  else {
+  } else {
     let token = crypto.randomBytes(32).toString('hex');
     const activationToken = crypto
       .createHash('sha256')
@@ -115,7 +120,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
       activationToken,
-      referCode: generatePassword(8)
+      referCode: generatePassword(8),
     });
 
     const url = `${req.protocol}://${req.get(
@@ -131,7 +136,6 @@ exports.signup = catchAsync(async (req, res, next) => {
       },
     });
   }
-
 });
 
 exports.verification = catchAsync(async (req, res, next) => {

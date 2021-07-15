@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -52,7 +53,7 @@ const userSchema = new mongoose.Schema({
   activationToken: String,
   referCode: { type: String, required: true },
   referedBy: { type: Schema.Types.ObjectId, ref: 'User', default: undefined },
-  points: { type: Number, default: 0 }
+  points: { type: Number, default: 0 },
 });
 
 userSchema.pre('save', async function (next) {
