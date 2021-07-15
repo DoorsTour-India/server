@@ -5,6 +5,27 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const Email = require('./../utils/email');
+//refer code generator
+function generatePassword(passwordLength) {
+  var numberChars = "0123456789";
+  var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var allChars = numberChars + upperChars;
+  var randPasswordArray = Array(passwordLength);
+  randPasswordArray[0] = numberChars;
+  randPasswordArray[1] = upperChars;
+  randPasswordArray = randPasswordArray.fill(allChars, 3);
+  return shuffleArray(randPasswordArray.map(function (x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+}
+
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -36,32 +57,81 @@ const createSendToken = async (user, statusCode, req, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  let token = crypto.randomBytes(32).toString('hex');
-  const activationToken = crypto
-    .createHash('sha256')
-    .update(token)
-    .digest('hex');
+  if (req.body.rc.length == 7) {
+    const referedBy = await User.findOne({ referCode: req.body.rc });
+    if (!referedBy) {
+      return next(
+        new AppError("Wrong refer code please try again", 401)
+      );
+    }
+    else {
+      points = referedBy.points;
+      points = points + 1;
+      referedBy.points = points;
+      await referedBy.save()
+      //creating new user
+      let token = crypto.randomBytes(32).toString('hex');
+      const activationToken = crypto
+        .createHash('sha256')
+        .update(token)
+        .digest('hex');
 
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-    activationToken,
-  });
+      const newUser = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        passwordConfirm: req.body.passwordConfirm,
+        activationToken,
+        referCode: generatePassword(8),
+        points : 1,
+        referedBy : referedBy._id
+      });
 
-  const url = `${req.protocol}://${req.get(
-    'host'
-  )}/krayikapi/v1/users/verified/${activationToken}`;
+      const url = `${req.protocol}://${req.get(
+        'host'
+      )}/krayikapi/v1/users/verified/${activationToken}`;
 
-  await new Email(newUser, url).sendActivationEmail();
+      await new Email(newUser, url).sendActivationEmail();
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      newUser,
-    },
-  });
+      return res.status(201).json({
+        status: 'success',
+        data: {
+          newUser,
+        },
+      });
+    }
+
+  }
+  else {
+    let token = crypto.randomBytes(32).toString('hex');
+    const activationToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+      activationToken,
+      referCode: generatePassword(8)
+    });
+
+    const url = `${req.protocol}://${req.get(
+      'host'
+    )}/krayikapi/v1/users/verified/${activationToken}`;
+
+    await new Email(newUser, url).sendActivationEmail();
+
+    return res.status(201).json({
+      status: 'success',
+      data: {
+        newUser,
+      },
+    });
+  }
+
 });
 
 exports.verification = catchAsync(async (req, res, next) => {

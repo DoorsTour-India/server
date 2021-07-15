@@ -50,6 +50,9 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   activationToken: String,
+  referCode: { type: String, required: true },
+  referedBy: { type: Schema.Types.ObjectId, ref: 'User', default: undefined },
+  points: { type: Number, default: 0 }
 });
 
 userSchema.pre('save', async function (next) {
