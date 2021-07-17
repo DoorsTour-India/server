@@ -70,4 +70,6 @@ module.exports = class Email {
   async sendActivationEmail() {
     await this.send('activationEmail', 'Please Activate your email!');
   }
+
+  
 };
