@@ -37,24 +37,26 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
     { runValidators: false }
   );
   // await user.save({ runValidators: false });
-  var userHTML = pug.renderFile(`${__dirname}/../views/product/orderConfirmationUser.pug`,{
-     id : product._id,
-     address : req.body.address,
-     district : req.body.district,
-     state : req.body.state,
-     postalCode : req.body.postalCode
-  });
+  var userHTML = pug.renderFile(
+    `${__dirname}/../views/product/orderConfirmationUser.pug`,
+    {
+      id: newProduct._id,
+      address: req.body.address,
+      district: req.body.district,
+      state: req.body.state,
+      postalCode: req.body.postalCode,
+    }
+  );
   var messageUser = {
-    from: 'teamkrayik@gmail.com',
+    from: 'Krayik <krayik@doorstour.com>',
     to: user.email,
     subject: 'Your order has been placed successfully ',
-    userHTML,
+    html: userHTML,
     text: htmlToText.fromString(userHTML),
   };
 
-  
   var messageAdmin = {
-    from: 'teamkrayik@gmail.com',
+    from: 'Krayik <no-reply-krayik@gmail.com>',
     to: 'teamkrayik@gmail.com',
     subject: `${user.name} <${user.email}> has claimed a product `,
     text: `Item name : ${newProduct.name}\n
