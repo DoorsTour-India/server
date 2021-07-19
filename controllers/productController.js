@@ -56,7 +56,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
   };
 
   var messageAdmin = {
-    from: 'Krayik <no-reply-krayik@gmail.com>',
+    from: 'Krayik <krayik@doorstour.com>',
     to: 'teamkrayik@gmail.com',
     subject: `${user.name} <${user.email}> has claimed a product `,
     text: `Item name : ${newProduct.name}\n
