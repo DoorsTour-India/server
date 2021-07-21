@@ -31,6 +31,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
       user: user._id,
       pointsBefore: user.points,
       pointsAfter: user.points - req.body.productPoints,
+      phoneNumber : req.body.phoneNumber
     });
     user.points = user.points - req.body.productPoints;
     await User.findByIdAndUpdate(
@@ -65,7 +66,8 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
           Delivery Address : ${newProduct.deliveryAddress}\n
           user details : ${user.name} / ${user.email}\n
           points before : ${newProduct.pointsBefore}\n
-          points after : ${newProduct.pointsAfter}`,
+          points after : ${newProduct.pointsAfter}\n
+          phone number : ${newProduct.phoneNumber}`,
     };
     transporter.sendMail(messageUser, function (error, info) {
       if (error) {
