@@ -31,7 +31,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
       user: user._id,
       pointsBefore: user.points,
       pointsAfter: user.points - req.body.productPoints,
-      phoneNumber : req.body.phoneNumber
+      phoneNumber: req.body.phoneNumber,
     });
     user.points = user.points - req.body.productPoints;
     await User.findByIdAndUpdate(
@@ -87,8 +87,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
       status: 'success',
       message: 'Product Claimed',
     });
-  }
-  else {
+  } else {
     return res.status(201).json({
       status: 'error',
       message: 'Not enough points',
