@@ -2,6 +2,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const cors = require('cors');
+const fileupload = require('express-fileupload');
 
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
@@ -40,6 +41,12 @@ app.use(mongoSanitize());
 //Data Sanitization against XSS
 app.use(xss());
 
+app.use(
+  fileupload({
+    useTempFiles: true,
+  })
+);
+
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
@@ -48,7 +55,7 @@ app.use((req, res, next) => {
 //ROUTES
 app.use('/', viewRouter);
 app.use('/krayikapi/v1/users', userRouter);
-app.use('/krayikapi/v1/product' , productRouter);
+app.use('/krayikapi/v1/product', productRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
