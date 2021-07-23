@@ -48,6 +48,8 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
         district: req.body.district,
         state: req.body.state,
         postalCode: req.body.postalCode,
+        name  : newProduct.name,
+        claimedAt : newProduct.claimedAt
       }
     );
     var messageUser = {
@@ -94,3 +96,12 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.productsClaimed = catchAsync(async (req, res, next) => {
+  products = await Product.find({user : req.user.email});
+  res.status(201).json({
+    status : 'succes',
+    data : products
+  });
+});
+

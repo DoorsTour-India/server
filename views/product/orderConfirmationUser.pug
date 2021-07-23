@@ -1,105 +1,102 @@
-doctype html
+doctype strict
 head
-  title
   meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  title Email Template for Order Confirmation Email
+  // Start Common CSS
   style(type='text/css').
-    body,
-    table,
-    td,
-    a {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    }
-    table,
-    td {
-    mso-table-lspace: 0pt;
-    mso-table-rspace: 0pt;
-    }
-    img {
-    -ms-interpolation-mode: bicubic;
-    }
-    img {
-    border: 0;
-    height: auto;
-    line-height: 100%;
-    outline: none;
-    text-decoration: none;
-    }
-    table {
-    border-collapse: collapse !important;
+    #outlook a {
+    padding: 0;
     }
     body {
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
     width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, arial, sans-serif;
     }
-    a[x-apple-data-detectors] {
-    color: inherit !important;
-    text-decoration: none !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
+    .ExternalClass {
+    width: 100%;
     }
-    @media screen and (max-width: 480px) {
-    .mobile-hide {
-    display: none !important;
+    .ExternalClass,
+    .ExternalClass p,
+    .ExternalClass span,
+    .ExternalClass font,
+    .ExternalClass td,
+    .ExternalClass div {
+    line-height: 100%;
     }
-    .mobile-center {
-    text-align: center !important;
+    .backgroundTable {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    line-height: 100% !important;
     }
+    .main-temp table {
+    border-collapse: collapse;
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+    font-family: Helvetica, arial, sans-serif;
     }
-    div[style*="margin: 16px 0;"] {
-    margin: 0 !important;
+    .main-temp table td {
+    border-collapse: collapse;
     }
-div(style='display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;')
-  | For what reason would it be advisable for me to think about business content? That might be little bit risky to
-  | have crew member like them.
-table(border='0' cellpadding='0' cellspacing='0' width='100%')
-  tr
-    td(align='center' style='background-color: #eeeeee;' bgcolor='#eeeeee')
-      table(align='center' border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width:600px;')
-        tr
-          td(align='center' valign='top' style='font-size:0; padding: 35px; background-color:#A0E8C9; padding : 0%')
-            img(src='https://res.cloudinary.com/dmv7jhvdh/image/upload/v1626694939/web_krayik_1_o7nszf.png' style='height: 100px; width: auto;')
-        tr
-          td(align='center' style='padding: 35px 35px 20px 35px; background-color: #ffffff;' bgcolor='#ffffff')
-            table(align='center' border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width:600px;')
-              tr
-                td(align='center' style='font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;')
-                  img(src='https://img.icons8.com/carbon-copy/100/000000/checked-checkbox.png' width='125' height='120' style='display: block; border: 0px;')
-                  br
-                  h2(style='font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;')
-                    | Thank You For Your Order!
-              tr
-                td(align='left' style='font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;')
-                  p(style='font-size: 16px; font-weight: 400; line-height: 24px; color: #777777; text-align: center;')
-                    | Your Order has been placed successfully item will be delivered to your
-                    | address in a few days
-              tr
-                td(align='left' style='padding-top: 20px;')
-                  table(cellspacing='0' cellpadding='0' border='0' width='100%')
+  // End Common CSS
+table.backgroundTable.main-temp(width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color: #d5d5d5;')
+  tbody
+    tr
+      td
+        table.devicewidth(width='600' align='center' cellpadding='15' cellspacing='0' border='0' style='background-color: #ffffff;')
+          tbody
+            // Start header Section
+            tr
+              td(style='padding-top: 30px;')
+                table.devicewidthinner(width='560' align='center' cellpadding='0' cellspacing='0' border='0' style='border-bottom: 1px solid #eeeeee; text-align: center;')
+                  tbody
                     tr
-                      td(width='75%' align='left' bgcolor='#eeeeee' style='font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;')
-                        | Order Confirmation #
-                      td(width='25%' align='left' bgcolor='#eeeeee' style='font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;')
-                        |#{id}
-        tr
-          td(align='center' height='100%' valign='top' width='100%' style='padding: 0 35px 35px 35px; background-color: #ffffff;' bgcolor='#ffffff')
-            table(align='center' border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width:660px;')
-              tr
-                td(align='center' valign='top' style='font-size:0;')
-                  div(style='display:inline-block; max-width:50%; min-width:240px; vertical-align:top; width:100%;')
-                    table(align='left' border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width:300px;')
-                      tr
-                        td(align='center' valign='top' style='font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;')
-                          p(style='font-weight: 800;') Delivery Address
-                          p
-                            |#{address}
-                            br
-                            |#{district}
-                            br
-                            |#{state}-#{postalCode}
+                      td(style='padding-bottom: 10px;')
+                        a(href='https://htmlcodex.com')
+                          img(src='images/logo.png' alt='PapaChina')
+                    tr
+                      td(style='font-size: 14px; line-height: 18px; color: #666666;')
+                        | 3828 Mall Road
+                    tr
+                      td(style='font-size: 14px; line-height: 18px; color: #666666;')
+                        | Los Angeles, California, 90017
+                    tr
+                      td(style='font-size: 14px; line-height: 18px; color: #666666;')
+                        | Phone: 310-807-6672 | Email: info@example.com
+                    tr
+                      td(style='font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 25px;')
+                        strong Order Number:
+                        | #{id} | 
+                        strong Order Date:
+                        |               #{claimedAt}
+            // End header Section
+            // Start address Section
+            tr
+              td(style='padding-top: 0;')
+                table.devicewidthinner(width='560' align='center' cellpadding='0' cellspacing='0' border='0' style='border-bottom: 1px solid #bbbbbb;')
+                  tbody
+                    tr
+                      td(style='width: 100%; font-size: 16px; font-weight: bold; color: #666666; padding-bottom: 5px;')
+                        | Delivery Adderss
+                    tr
+                      td(style='width: 100%; font-size: 14px; line-height: 18px; color: #666666;')
+                        | #{address}
+                    tr
+                      td(style='width: 100%; font-size: 14px; line-height: 18px; color: #666666;')
+                        | #{district}
+                    tr
+                      td(style='width: 100%; font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 10px;')
+                        | #{state}-#{postalCode}
+    // End address Section
+    // Start product Section
+    tr
+      td(style='padding-top: 0;')
+        table.devicewidthinner(width='560' align='center' cellpadding='0' cellspacing='0' border='0' style='border-bottom: 1px solid #eeeeee;')
+          tbody
+            tr
+              td(colspan='2' style='font-size: 14px; font-weight: bold; color: #666666; padding-bottom: 5px;')
+                | Product Name - #{productName}
+    
