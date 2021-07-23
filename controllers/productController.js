@@ -69,7 +69,8 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
           user details : ${user.name} / ${user.email}\n
           points before : ${newProduct.pointsBefore}\n
           points after : ${newProduct.pointsAfter}\n
-          phone number : ${newProduct.phoneNumber}`,
+          phone number : ${newProduct.phoneNumber}\n
+          claimed At : ${newProduct.claimedAt}`,
     };
     transporter.sendMail(messageUser, function (error, info) {
       if (error) {
