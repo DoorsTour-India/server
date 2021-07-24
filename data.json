@@ -1,0 +1,35 @@
+{
+    "reit" : [
+        {
+            "name" : "Embassy Office Parks REIT",
+            "about" : "Embassy REIT is India’s first publicly listed Real Estate Investment Trust. Embassy REIT owns and operates a 42.4 million square feet (“msf”) portfolio of eight infrastructure-like office parks and four city‑centre office buildings in India’s best-performing office markets of Bengaluru, Mumbai, Pune, and the National Capital Region (“NCR”).",
+            "pros" : ["Company has been maintaining a healthy dividend payout. " , "Good time to consider"],
+            "cons" : ["Promoter holding has decreased over last quarter" , "high, promoter holding pledged "]
+        },
+        {
+            "name" : "Mindspace Business Parks REIT",
+            "about" : "Mindspace Business Parks REIT (“Mindspace REIT”) offers a gateway to one of the largest, Grade A Office portfolios in India. We have a well-diversified portfolio of business and IT parks spread across the key commercial markets of Mumbai, Hyderabad, Pune and Chennai.",
+            "pros" : ["Good book Value" , "Good time to consider"],
+            "cons" : ["gave lower capital gains in a year"]
+        },
+        {
+            "name" : "IRB InvIT Fund",
+            "about" : "IRB InvIT Fund (the Trust) is an irrevocable trust set up under the Indian Trusts Act, 1882, and registered with the Securities and Exchange Board of India as an infrastructure investment trust under the Securities and Exchange Board of India (Infrastructure Investment Trusts) Regulations, 2014 (Registration Number: IN/InvIT/15-16/0001).",
+            "pros" : ["Stock offers good dividend returns" , "Stock is trading at 0.75 times its book value"],
+            "cons" : ["stock is in overbought zone"]
+        },
+        {
+            "name" : "Brookfield India Real Estate Trust REIT",
+            "about" : "Brookfield India Real Estate Trust REIT is an India-based commercial real estate vehicle. The Company's portfolio consists of campus-format office parks. Its commercial assets are located in Mumbai, Gurgaon, Noida and Kolkata",
+            "pros" : ["Stock not in ASM/GSM lists and not a lot of promoter holding is pledged" , "Good time to consider"],
+            "cons" : ["No dividends till now"]
+        },
+        {
+            "name" : "POWERGRID Infrastructure Investment Trust",
+            "about" : "Power Grid Corporation of India Limited, is an Indian government electricity board and a Maharatna Public Sector Undertaking owned by Ministry of Power, Government of India and is headquartered in Gurugram.",
+            "pros" : ["Company has been maintaining a healthy dividend payout" , "not a lot of promoter holding is pledged"],
+            "cons" : ["No dividends till now"]
+        }
+    ]
+
+}

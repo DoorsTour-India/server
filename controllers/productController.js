@@ -100,7 +100,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
 
 exports.productsClaimed = catchAsync(async (req, res, next) => {
   products = await Product.find({user : req.user.email});
-  res.status(201).json({
+  res.status(200).json({
     status : 'succes',
     data : products
   });
