@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 app.use('/', viewRouter);
 app.use('/krayikapi/v1/users', userRouter);
 app.use('/krayikapi/v1/product', productRouter);
-app.use('/krayikapi/v1/dataDisplay' , dataRouter);
+app.use('/krayikapi/v1/dataDisplay', dataRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

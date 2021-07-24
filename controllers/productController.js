@@ -48,8 +48,8 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
         district: req.body.district,
         state: req.body.state,
         postalCode: req.body.postalCode,
-        name  : newProduct.name,
-        claimedAt : newProduct.claimedAt
+        name: newProduct.name,
+        claimedAt: newProduct.claimedAt,
       }
     );
     var messageUser = {
@@ -99,10 +99,19 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.productsClaimed = catchAsync(async (req, res, next) => {
-  products = await Product.find({user : req.user.email});
+  const products = await Product.find({ user: req.user._id });
+
+  if (!products) {
+    res.status(400).json({
+      status: 'fail',
+      message:
+        "You haven't claimed any products yet, Please refer someone and enjoy benefits!",
+    });
+  }
+
   res.status(200).json({
-    status : 'succes',
-    data : products
+    status: 'success',
+    results: products.length,
+    data: products,
   });
 });
-
