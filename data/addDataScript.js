@@ -17,18 +17,17 @@ mongoose
   })
   .then(() => console.log('Connection to Database is successful!'));
 
-var data_str = fs.readFileSync(`${__dirname}/data.json`, 'utf-8');
-var data = JSON.parse(data_str);
+const data_str = fs.readFileSync(`${__dirname}/data.json`, 'utf-8');
+const data = JSON.parse(data_str);
 
 const importData = async () => {
   try {
-    await Data.create({
-      reitData: data.reit,
-    });
+    await Data.create(data);
     console.log('Data Added successfully!');
   } catch (err) {
     console.log(err);
   }
+  process.exit();
 };
 
 const deleteData = async () => {
@@ -38,6 +37,7 @@ const deleteData = async () => {
   } catch (err) {
     console.log(err);
   }
+  process.exit();
 };
 
 if (process.argv[2] === '--import') {
