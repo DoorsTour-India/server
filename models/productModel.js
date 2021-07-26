@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new mongoose.Schema({
-  name: { type: String, required: [true, 'Please Provide Product Name'] },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'ProductList',
+    default: undefined,
+  },
   deliveryAddress: {
     type: String,
     required: [true, 'Please Provide Delivery Address'],

@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const nodemailer = require('nodemailer');
 const pug = require('pug');
 const htmlToText = require('html-to-text');
+const ProductList = require('../models/productListModel');
 
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -15,7 +16,8 @@ var transporter = nodemailer.createTransport({
 
 exports.claimProduct = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.user.email });
-  if (user.points >= req.body.productPoints) {
+  const product = await ProductList.findOne({ product: req.body.productId });
+  if (user.points >= product.claimPoints) {
     var address =
       req.body.address +
       ', ' +
@@ -26,14 +28,14 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
       req.body.postalCode;
 
     const newProduct = await Product.create({
-      name: req.body.productName,
+      product: product._id,
       deliveryAddress: address,
       user: user._id,
       pointsBefore: user.points,
-      pointsAfter: user.points - req.body.productPoints,
+      pointsAfter: user.points - product.claimPoints,
       phoneNumber: req.body.phoneNumber,
     });
-    user.points = user.points - req.body.productPoints;
+    user.points = user.points - product.claimPoints;
     await User.findByIdAndUpdate(
       user._id,
       { points: user.points },
@@ -48,7 +50,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
         district: req.body.district,
         state: req.body.state,
         postalCode: req.body.postalCode,
-        name: newProduct.name,
+        name: product.name,
         claimedAt: newProduct.claimedAt,
       }
     );
@@ -64,7 +66,7 @@ exports.claimProduct = catchAsync(async (req, res, next) => {
       from: 'Krayik <krayik@doorstour.com>',
       to: 'teamkrayik@gmail.com',
       subject: `${user.name} <${user.email}> has claimed a product `,
-      text: `Item name : ${newProduct.name}\n
+      text: `Item name : ${product.name}\n
           Delivery Address : ${newProduct.deliveryAddress}\n
           user details : ${user.name} / ${user.email}\n
           points before : ${newProduct.pointsBefore}\n
