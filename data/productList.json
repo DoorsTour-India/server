@@ -1,34 +1,42 @@
 [
   {
     "name": "Gift Card",
-    "claimPoints": 20
+    "claimPoints": 20,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/gift_card_ua5wat.png"
   },
   {
     "name": "Boat Headphones",
-    "claimPoints": 50
+    "claimPoints": 50,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/Boat_headphones_yseo3v.png"
   },
   {
     "name": "Mivi Roam 2",
-    "claimPoints": 100
+    "claimPoints": 100,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/Mivi_Roam_2_rqcgvd.png"
   },
   {
     "name": "Mi Smart Band 4",
-    "claimPoints": 200
+    "claimPoints": 200,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303141/Product%20List/Mi_Smart_Band_4_fhzfdl.png"
   },
   {
     "name": "Google Home Mini",
-    "claimPoints": 300
+    "claimPoints": 300,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/Google_home_mini_nrfkde.png"
   },
   {
     "name": "OnePlus Buds Bluetooth Headset",
-    "claimPoints": 500
+    "claimPoints": 500,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/Oneplus_buds_ism9zk.png"
   },
   {
-    "name": "Realme Narzo 20",
-    "claimPoints": 1000
+    "name": "Realme Smartphone",
+    "claimPoints": 1000,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/Realme_Narzo_st7pgv.png"
   },
   {
-    "name": "Realme Narzo 30 Pro 5G",
-    "claimPoints": 5000
+    "name": "iPhone 12",
+    "claimPoints": 5000,
+    "image": "https://res.cloudinary.com/dmv7jhvdh/image/upload/v1627303142/Product%20List/iphone_12_ovp0ex.png"
   }
 ]
