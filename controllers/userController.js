@@ -8,6 +8,7 @@ const factory = require('./handlerFactory');
 const Email = require('./../utils/email');
 const fileupload = require('express-fileupload');
 const cloudinary = require('cloudinary').v2;
+const { stringify } = require('querystring');
 
 cloudinary.config({
   cloud_name: 'dmv7jhvdh',
@@ -103,35 +104,35 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email' , 'dob');
-  if (req.file) filteredBody.photo = req.file.filename;
+  const filteredBody = filterObj(req.body, 'name', 'dob');
+  filteredBody.dob = filteredBody.dob + 'Z';
+  // if (req.file) filteredBody.photo = req.file.filename;
 
   // Create activation token and store it in database.
-  let token = crypto.randomBytes(32).toString('hex');
-  const activationToken = crypto
-    .createHash('sha256')
-    .update(token)
-    .digest('hex');
+  // let token = crypto.randomBytes(32).toString('hex');
+  // const activationToken = crypto
+  //   .createHash('sha256')
+  //   .update(token)
+  //   .digest('hex');
 
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
-    { ...filteredBody, active: false, activationToken },
+    { ...filteredBody },
     {
       new: true,
-      runValidators: true,
+      runValidators: false,
     }
   );
 
   // Send Activation Email..
-  const url = `${req.protocol}://${req.get('host')}/success/${activationToken}`;
+  // const url = `${req.protocol}://${req.get('host')}/success/${activationToken}`;
 
-  await new Email(updatedUser, url).sendActivationEmail();
+  // await new Email(updatedUser, url).sendActivationEmail();
 
-  res.status(200).json({
+  res.status(201).json({
     status: 'success',
     data: {
       user: updatedUser,
-      message: 'Email sent for verification!',
     },
   });
 });
