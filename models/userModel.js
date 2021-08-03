@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'guide', 'lead-guide', 'admin'],
     default: 'user',
   },
+  accountType: {
+    type: String,
+    enum: ['email', 'google'],
+    default: 'email',
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],

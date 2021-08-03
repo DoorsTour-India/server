@@ -61,6 +61,7 @@ const createSendToken = async (user, statusCode, req, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  var newUser;
   if (req.body.rc.length == 7) {
     const referedBy = await User.findOne({ referCode: req.body.rc });
     if (!referedBy) {
@@ -83,22 +84,36 @@ exports.signup = catchAsync(async (req, res, next) => {
         .update(token)
         .digest('hex');
 
-      const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-        activationToken,
-        referCode: generatePassword(8),
-        points: 1,
-        referedBy: referedBy._id,
-      });
+      if (req.body.accountType === 'google') {
+        newUser = await User.create({
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          passwordConfirm: req.body.passwordConfirm,
+          accountType: req.body.accountType,
+          active: true,
+          referCode: generatePassword(8),
+          points: 1,
+          referedBy: referedBy._id,
+        });
+      } else {
+        newUser = await User.create({
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          passwordConfirm: req.body.passwordConfirm,
+          activationToken,
+          referCode: generatePassword(8),
+          points: 1,
+          referedBy: referedBy._id,
+        });
 
-      const url = `${req.protocol}://${req.get(
-        'host'
-      )}/krayikapi/v1/users/verified/${activationToken}`;
+        const url = `${req.protocol}://${req.get(
+          'host'
+        )}/krayikapi/v1/users/verified/${activationToken}`;
 
-      await new Email(newUser, url).sendActivationEmail();
+        await new Email(newUser, url).sendActivationEmail();
+      }
 
       return res.status(201).json({
         status: 'success',
@@ -114,20 +129,32 @@ exports.signup = catchAsync(async (req, res, next) => {
       .update(token)
       .digest('hex');
 
-    const newUser = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-      activationToken,
-      referCode: generatePassword(8),
-    });
+    if (req.body.accountType === 'google') {
+      newUser = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        passwordConfirm: req.body.passwordConfirm,
+        accountType: req.body.accountType,
+        active: true,
+        referCode: generatePassword(8),
+      });
+    } else {
+      newUser = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        passwordConfirm: req.body.passwordConfirm,
+        activationToken,
+        referCode: generatePassword(8),
+      });
 
-    const url = `${req.protocol}://${req.get(
-      'host'
-    )}/krayikapi/v1/users/verified/${activationToken}`;
+      const url = `${req.protocol}://${req.get(
+        'host'
+      )}/krayikapi/v1/users/verified/${activationToken}`;
 
-    await new Email(newUser, url).sendActivationEmail();
+      await new Email(newUser, url).sendActivationEmail();
+    }
 
     return res.status(201).json({
       status: 'success',
@@ -164,27 +191,40 @@ exports.verification = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  if (req.body.accountType === 'google') {
+    const user = await User.findOne({
+      email: req.body.email,
+      accountType: req.body.accountType,
+    });
 
-  // 1) Check if email and password exist
-  if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
+    if (!user) {
+      return next(new AppError('No account found with this email!', 404));
+    }
+
+    createSendToken(user, 200, req, res);
+  } else {
+    const { email, password } = req.body;
+
+    // 1) Check if email and password exist
+    if (!email || !password) {
+      return next(new AppError('Please provide email and password!', 400));
+    }
+    // 2) Check if user exists && password is correct
+    const user = await User.findOne({ email })
+      .select('+password')
+      .select('+active');
+
+    if (!user.active) {
+      return next(new AppError('Please verify your Email to continue!', 401));
+    }
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      return next(new AppError('Incorrect email or password', 401));
+    }
+
+    // 3) If everything ok, send token to client
+    createSendToken(user, 200, req, res);
   }
-  // 2) Check if user exists && password is correct
-  const user = await User.findOne({ email })
-    .select('+password')
-    .select('+active');
-
-  if (!user.active) {
-    return next(new AppError('Please verify your Email to continue!', 401));
-  }
-
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password', 401));
-  }
-
-  // 3) If everything ok, send token to client
-  createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res) => {
