@@ -16,7 +16,7 @@ var transporter = nodemailer.createTransport({
 
 exports.claimProduct = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.user.email });
-  const product = await ProductList.findOne({ product: req.body.product });
+  const product = await ProductList.findOne({ _id: req.body.product });
   if (user.points >= product.claimPoints) {
     var address =
       req.body.address +
